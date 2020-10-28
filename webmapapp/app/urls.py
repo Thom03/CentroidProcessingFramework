@@ -6,6 +6,6 @@ from . import views
 
 urlpatterns = [
     path('', views.MapPortal.as_view(), name='Homepage'),
-    path('centroids.geojson/', centroid_view())
+    path('centroids.geojson/', centroid_view, name='centroid')
 ]
 

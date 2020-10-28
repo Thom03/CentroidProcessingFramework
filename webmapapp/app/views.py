@@ -6,12 +6,12 @@ from django.core.serializers import serialize
 from .models import *
 
 
-
 class MapPortal(TemplateView):
     # Rendering portal Template to display Map
     template_name = "portal.html"
 
+
 def centroid_view(request):
-    #Rendering cenroid data to geojson
+    # Rendering cenroid data to geojson
     centroid_as_geojson = serialize('geojson', parcel_centroid.objects.all())
     return HttpResponse(centroid_as_geojson, content_type='json')
