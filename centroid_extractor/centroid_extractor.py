@@ -25,6 +25,9 @@ from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
 from PyQt5.QtWidgets import QAction, QFileDialog
+from qgis.core import QgsVectorLayer, QgsGeometry, QgsFeature, QgsMapLayer
+
+import psycopg2
 
 # Initialize Qt resources from file resources.py
 from .resources import *
@@ -181,8 +184,48 @@ class CentroidExtractor:
     def select_data_folder(self):
         """Defining data directory from QGIS GUI."""
         select_folder = QFileDialog.getExistingDirectory(
-            self.dlg, "Select Data Directory", "",)
+            self.dlg, "Select Data Directory", "", )
         self.dlg.lineEditFolder.setText(select_folder)
+
+    def get_centroid_from_polygon(layerName):
+        """Getting centroid from the polygon."""
+        layerName = "INTERIOR"
+        layer = QgsMapLayer.instance().mapLayersByName(layerName)[0]
+        print("layer.name---->", layer.name())
+
+        epsg = layer.crs().postgisSrid()
+
+        uri = "Point?crs=epsg:" + str(epsg) + "&field=id:integer""&index=yes"
+
+        mem_layer = QgsVectorLayer(uri,
+                                   'point',
+                                   'memory')
+
+        prov = mem_layer.dataProvider()
+
+        i = 0
+
+        for f in layer.getFeatures():
+            feat = QgsFeature()
+            pt = f.geometry().centroid().asPoint()
+            print("pt---->", pt)
+            feat.setAttributes([i])
+            feat.setGeometry(QgsGeometry.fromPoint(pt))
+            prov.addFeatures([feat])
+            i += 1
+
+        QgsMapLayer.instance().addMapLayer(mem_layer)
+
+    def save_geometry_to_db(self):
+        """Connection to the Database and Insert to the table"""
+        conn = psycopg2.connect(dbname='centroid',
+                                port='5432',
+                                user='postgres',
+                                password='postgres',
+                                host='localhost')
+        cur = conn.cursor()
+        x, y, z, = 32, 34, 0
+        cur.execute("SELECT ST_SetSRID(ST_MakePoint(%s, %s, %s),4326);", (x, y, z))
 
     def run(self):
         """Run method that performs all the real work"""
@@ -193,7 +236,6 @@ class CentroidExtractor:
             self.first_start = False
             self.dlg = CentroidExtractorDialog()
             self.dlg.pushButton.clicked.connect(self.select_data_folder)
-
 
         # show the dialog
         self.dlg.show()
