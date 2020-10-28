@@ -1,0 +1,47 @@
+# This file contains metadata for your plugin.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=Centroid Extractor
+qgisMinimumVersion=3.0
+description=This plugin extracts centroids from polygons.
+version=0.1
+author=George Thomas Muteti
+email=thomas.muteti@gmail.com
+
+about=Centroid Extractor automatically monitors new files (of ESRI shapefile format) that are added to a user-defined data folder. Also it extracts centroids.
+
+tracker=https://github.com/Thom03/CentroidProcessingFramework/issues
+repository=https://github.com/Thom03/CentroidProcessingFramework.git
+# End of mandatory metadata
+
+# Recommended items:
+
+hasProcessingProvider=no
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=point, polygon, postgis, centroid, layers
+
+homepage=http://homepage
+category=Vector
+icon=icon.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
+# Since QGIS 3.8, a comma separated list of plugins to be installed
+# (or upgraded) can be specified.
+# Check the documentation for more information.
+# plugin_dependencies=
+
+Category of the plugin: Raster, Vector, Database or Web
+# category=
+
+# If the plugin can run on QGIS Server.
+server=False
+
