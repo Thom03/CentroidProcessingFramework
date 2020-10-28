@@ -1,7 +1,7 @@
 # Centroid Extractor
 Centroid Extractor  is a QGIS plugin automatically monitors new files (of ESRI shapefile format) that are added to a user-defined data folder. Also it extracts centroids.
 
-etting Started
+### Getting Started
 
 To get a local copy up and running follow these simple steps.
 
