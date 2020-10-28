@@ -4,7 +4,7 @@
 
 ## UML activity diagram
 
-
+![alt text](https://github.com/Thom03/CentroidProcessingFramework/blob/master/Centroid_Extractor_UML.png?raw=True)
 
 ## Getting Started
 
