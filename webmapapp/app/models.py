@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.gis.db import models
 
 
-# Create your models here.
 class parcel_centroid(models.Model):
     #  Parcel Centroid Model.
     name = models.CharField(max_length=80)
